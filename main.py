@@ -10,7 +10,12 @@ canal = "https://t.me/promocoesdodiacanal"
 
 # --- CONFIG GOOGLE SHEETS ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json", scope)
+import json
+import os
+
+json_creds = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(json_creds, scope)
+
 client_sheets = gspread.authorize(creds)
 sheet = client_sheets.open("PromocoesTelegram").sheet1
 
